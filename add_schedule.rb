@@ -1,5 +1,8 @@
 #!/usr/bin/ruby
 
+require 'rubygems'
+require 'gcalapi'
+
 mail = "foo@gmail.com"
 pass = "bar"
 feed = "http://www.google.com/calendar/feeds/foo%40gmail.com/private/full"
