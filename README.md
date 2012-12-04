@@ -14,6 +14,8 @@ cancel.sh
 ---------------------------------------------
 まず、gemでgcalapiをinstallする必要があります。次に、add_schedule.rbを自分のアカウントに合わせて手直しする必要があります。(fooとbarの場所を直すだけです。)
 
+`sed -i -e 's/foo/hoge/g;s/bar/fuga/g' add_schedule.rb`
+
 次にsearch.listを直します。デフォルトで入っているものを参考にして下さい。見やすさ的に区切り文字は改行がいいと思います。多分これで動きます。
 
 仕様
