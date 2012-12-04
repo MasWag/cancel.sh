@@ -30,6 +30,7 @@ print;
 mv  tmp tmp.html
 
 for key in $(cat search.list) ; do
+echo $key
     line=$(grep "$key" tmp.html)
     if [ $(grep -c "$line" cancel.cache) -eq 0 ] && [[ ! $line =~ ^$ ]]; then
 	echo "$line" >> cancel.cache;
@@ -44,7 +45,7 @@ for key in $(cat search.list) ; do
 	else
 	    year=2013;
 	fi
-	#ruby add_schedule.rb 
-	echo $name $place $year $month $day $class
+	#ruby add_schedule.rb $name $place $year $month $date $class
+	echo $name $place $year $month $date $class
     fi
 done
