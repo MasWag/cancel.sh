@@ -40,8 +40,8 @@ echo $key
 	class=$(echo $line | awk -F "," '{print $3 }' )
 	month=$(echo $d | sed -e 's:月.*$::g')
 	date=$(echo $d | sed -e 's:日.*$::g;s:^.*月::g')
-	if [ $month > 4 ] ; then 
-	    year=2012;
+	if [ $month -ge 4 ] ; then 
+	    year=2013;
 	else
 	    year=2013;
 	fi
