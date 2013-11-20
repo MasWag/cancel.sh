@@ -40,6 +40,17 @@ when "6" then
   en_hour = 19
   en_min = 40
 end
+if ARGV.length > 6 then
+  st_min += ARGV[6].to_i
+  while st_min < 0 do
+    st_hour -= 1
+    st_min += 60
+  end
+  while st_min >= 60 do
+    st_hour += 1
+    st_min -= 60
+  end
+end
 event = cal.create_event
 event.title = ARGV[0]
 event.desc = ARGV[0]
