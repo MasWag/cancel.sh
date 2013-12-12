@@ -31,9 +31,9 @@ for key in $(cat `dirname $0`/search.list) ; do
 	        else
 	            year=$((`date +"%Y"` + 1));
 	        fi
-#	        ruby `dirname $0`/add_schedule.rb $name $place $year $month $date $class
-#               ruby `dirname $0`/add_schedule.rb $name2 $place $year $month $(($date - 1)) 3
-# 	        ruby `dirname $0`/add_schedule.rb $name3 $place $year $month $date 1 -10
+	        ruby `dirname $0`/add_schedule.rb $name $place $year $month $date $class
+                ruby `dirname $0`/add_schedule.rb $name2 $place $year $month $(($date - 1)) 3
+ 	        ruby `dirname $0`/add_schedule.rb $name3 $place $year $month $date 1 -10
 	        if $VERBOSE ; then echo $name $place $year $month $date $class ; fi
         fi
     done
