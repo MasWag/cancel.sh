@@ -2,12 +2,16 @@
 
 require 'rubygems'
 require 'gcalapi'
+require "pit"
 
-mail = "foo@gmail.com"
-pass = "bar"
-feed = "http://www.google.com/calendar/feeds/foo%40gmail.com/private/full"
-srv = GoogleCalendar::Service.new(mail, pass)
-cal = GoogleCalendar::Calendar::new(srv, feed)
+config = Pit.get("add_schedule.rb", :require => {
+  "mail" => "input your login mail address",
+  "pass" => "input your password",
+  "feed" => "input your feed address",
+})
+
+srv = GoogleCalendar::Service.new(config["mail"], config["pass"])
+cal = GoogleCalendar::Calendar::new(srv, config["feed"])
 case ARGV[5] 
 when "1" then
   st_hour = 9
