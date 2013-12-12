@@ -1,9 +1,10 @@
 #!/usr/bin/ruby
 
 require 'rubygems'
-require 'gcalapi'
 require "pit"
+require 'gcalapi'
 
+ENV["EDITOR"] ||= "vim"
 config = Pit.get("add_schedule.rb", :require => {
   "mail" => "input your login mail address",
   "pass" => "input your password",
