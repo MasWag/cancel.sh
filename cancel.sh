@@ -6,7 +6,7 @@ touch `dirname $0`/cancel.cache
 
 if [ $# -gt 0 ] && [ $1 == '-v' ] ; then VERBOSE=( exit 1 );else VERBOSE=( exit 0);fi
 
-curl -s http://www.c.u-tokyo.ac.jp/zenki/classes/cancel/index.html | grep '</\?t[rd].*' | tr -d ',\t\n 　' | $SED -e 's:/tr>:/tr>\n:g'| $SED -e 's/<[^>]*>/,/g' | $SED -e 's/,,*/,/g'| $SED -e 's/^,//g;s/,$//g' | tee before | awk -F "," '{
+curl -s http://www.c.u-tokyo.ac.jp/zenki/classes/cancel/index.html | grep '</\?t[rd].*' | tr -d ',\t\n' | $SED -e 's:/tr>:/tr>\n:g'| $SED -e 's/<[^>]*>/,/g' | $SED -e 's/[[:blank:]]//g;s/,,*/,/g'| $SED -e 's/^,//g;s/,$//g' | tee before | awk -F "," '{
 if( NF == 4) for ( t = 3 ; t >=1 ; t-- ) { $(t+3)=$t; $t = L[t];}
 else for ( t = 3 ; t >=1 ; t-- ) L[t]=$t;
 print;
