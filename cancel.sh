@@ -6,13 +6,11 @@ touch `dirname $0`/cancel.cache
 
 #if [ $# -gt 0 ] && [ $1 == '-v' ] ; then VERBOSE=( exit 1 );else VERBOSE=( exit 0);fi
 
-curl -s http://www.c.u-tokyo.ac.jp/zenki/classes/cancel/index.html | grep '</\?t[rd].*' | tr -d ',\t\n' | $SED -e 's:/tr>:/tr>\n:g'| $SED -e 's/<[^>]*>/,/g' | $SED -e 's/[[:blank:]]//g;s/,,*/,/g'| $SED -e 's/^,//g;s/,$//g' | gawk -F "," '{
+curl -s http://www.c.u-tokyo.ac.jp/zenki/classes/cancel/index.html | grep '</\?t[rd].*' | tr -d ',\t\n' | $SED -e 's:/tr>:/tr>\n:g'| $SED -e 's/<[^>]*>/,/g' | $SED -e 's/[[:blank:]]//g;s/,,*/,/g'| $SED -e 's/^,//g;s/,$//g' | awk -F "," '{
 if( NF == 4) for ( t = 3 ; t >=1 ; t-- ) { $(t+3)=$t; $t = L[t];}
 else for ( t = 3 ; t >=1 ; t-- ) L[t]=$t;
 print;
-}' | tr ' ' ',' > `dirname $0`/tmp.csv
-
-gawk -F ',' -v verbose=$VERBOSE -v keyfile=`dirname $0`/search.list -v cachefile=`dirname $0`/cancel.cache -v m=`date +"%m"` -v y=`date +"%Y"` '
+}' | awk -v verbose=$VERBOSE -v keyfile=`dirname $0`/search.list -v cachefile=`dirname $0`/cancel.cache -v m=`date +"%m"` -v y=`date +"%Y"` '
 BEGIN {
 	numOfCache=0;
 	while ( (getline var < cachefile) > 0) {
@@ -53,9 +51,9 @@ NF > 0 && matchOr( $0 , keys , numOfKeys){
 	            year = y
 	        else
 	            year = y+1
-#	        system("ruby `dirname $0`/add_schedule.rb" name place year month date class)
+#	        system("ruby `dirname $0`/add_schedule.rb" name " " place " " year " " month " " date " " class)
 	        if (verbose) 
-			print name place year month date class;
+			print name " " place " " year " " month " " date " " class;
 	}
-}' tmp.csv 
+}' 
 
