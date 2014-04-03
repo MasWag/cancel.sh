@@ -6,7 +6,7 @@ touch `dirname $0`/cancel.cache
 
 #if [ $# -gt 0 ] && [ $1 == '-v' ] ; then VERBOSE=( exit 1 );else VERBOSE=( exit 0);fi
 
-curl -s http://www.is.s.u-tokyo.ac.jp/no-lec.php | awk 'BEGIN{a=0}/<\/tbody>/{exit}a&&/<\/?t/{print}/<tbody>/{a=1}' | tr '\n' ' ' | $SED -e 's/[[:blank:]]//g' | $SED -e 's/<tr><td>//g;s:</td><td>:,:g;s:</td></tr>:\n:g' | nkf  > `dirname $0`/tmp.csv
+curl -s http://www.is.s.u-tokyo.ac.jp/no-lec.php | awk 'BEGIN{a=0}/<\/tbody>/{exit}a&&/<\/?t/{print}/<tbody>/{a=1}' | tr '\n' ' ' | $SED -e 's/[[:blank:]]//g' | perl -MEncode -pe 's/<tr><td>//g;s:</td><td>:,:g;s:</td></tr>:\n:g;Encode::from_to($_,"eucjp",utf8)' > `dirname $0`/tmp.csv
 
 for key in $(cat `dirname $0`/search.list) ; do
     echo $key;#fi
