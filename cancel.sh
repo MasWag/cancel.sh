@@ -13,7 +13,9 @@ print;
 }' | tr ' ' ',' > `dirname $0`/tmp.csv
 
 for key in $(cat `dirname $0`/search.list) ; do
-    if $VERBOSE ; then echo $key;fi
+    #if $VERBOSE ; then 
+echo $key;
+#fi
     line=$(grep "$key" `dirname $0`/tmp.csv)
     for line2 in $line ; do
         if [ $(grep -c "$line2" `dirname $0`/cancel.cache) -eq 0 ] && [[ ! $line2 =~ ^$ ]]; then
@@ -31,9 +33,15 @@ for key in $(cat `dirname $0`/search.list) ; do
 	        else
 	            year=$((`date +"%Y"` + 1));
 	        fi
-	        ruby `dirname $0`/add_schedule.rb $name $place $year $month $date $class
-                ruby `dirname $0`/add_schedule.rb $name2 $place $year $month $(($date - 1)) 3
- 	        ruby `dirname $0`/add_schedule.rb $name3 $place $year $month $date 1 -10
+	        if [ $month -ge `date +"%m"` ] ; then 
+	            year2=`date +"%y"`;
+	        else
+	            year2=$((`date +"%y"` + 1));
+	        fi
+#	        ruby `dirname $0`/add_schedule.rb $name $place $year $month $date $class
+#               ruby `dirname $0`/add_schedule.rb $name2 $place $year $month $(($date - 1)) 3
+# 	        ruby `dirname $0`/add_schedule.rb $name3 $place $year $month $date 1 -10
+		echo $year2$month$date "$(echo $line2 | awk -F ',' '{print $4}' )" >> ~/sendcancel/sendschedule
 	        if $VERBOSE ; then echo $name $place $year $month $date $class ; fi
         fi
     done
