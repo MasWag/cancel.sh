@@ -14,19 +14,37 @@ for key in $(cat `dirname $0`/search.list) ; do
     for line2 in $line ; do
         if [ $(grep -c "$line2" `dirname $0`/cancel.cache) -eq 0 ] && [[ ! $line2 =~ ^$ ]]; then
 	        echo "$line2" >> `dirname $0`/cancel.cache;
-	        name=$(echo $line2 | awk -F "," '{print $3 "休講" }' )
+	        name=$(echo $line2 | awk -F "," '{print $3}' )
+	        name2=$name"休講" 
 	        place=$(echo $line2 |awk -F "," '{print $5 }' )
 	        d=$(echo $line2 | awk -F "," '{print $1 }' )
 	        class=${d#*)};
 	        month=$(echo $d | sed -e 's:月.*$::g')
+		if [[ ${#month} -lt 2 ]] ; then
+			month2=0$month;
+		else
+			month2=$month;
+		fi
 	        date=$(echo $d | sed -e 's:日.*$::g;s:^.*月::g')
+		stime=${class%-*};
+		etime=${class#*-};
+		if [[ ${#date} -lt 2 ]] ; then
+			date2=0$date;
+		else
+			date2=$date;
+		fi
 	        if [ $month -ge `date +"%m"` ] ; then 
-	            year=`date +"%Y"`;
+	            Year=`date +"%Y"`;
 	        else
-	            year=$((`date +"%Y"` + 1));
+	            Year=$((`date +"%Y"` + 1));
 	        fi
-#	        ruby `dirname $0`/add_schedule.rb $name $place $year $month $date $class
-	        echo $name $place $year $month $date $class ;
+	        if [ $month -ge `date +"%m"` ] ; then 
+	            year=`date +"%y"`;
+	        else
+	            year=$((`date +"%y"` + 1));
+	        fi
+	        #echo $year$month2$date2 $name >> ~/sendcancel/sendschedule;
+		ruby `dirname $0`/add_schedule.rb $name2 $place $Year $month $date ${stime%:*} ${stime#*:} ${etime%:*} ${etime#*:}
         fi
     done
 done

@@ -13,40 +13,13 @@ config = Pit.get("add_schedule.rb", :require => {
 
 srv = GoogleCalendar::Service.new(config["mail"], config["pass"])
 cal = GoogleCalendar::Calendar::new(srv, config["feed"])
-case ARGV[5] 
-when "1" then
-  st_hour = 9
-  st_min = 0
-  en_hour = 10
-  en_min = 30
-when "2" then
-  st_hour = 10
-  st_min = 40
-  en_hour = 12
-  en_min = 10
-when "3" then
-  st_hour = 13
-  st_min = 0
-  en_hour = 14
-  en_min = 30
-when "4" then
-  st_hour = 14
-  st_min = 50
-  en_hour = 16
-  en_min = 20
-when "5" then
-  st_hour = 16
-  st_min = 30
-  en_hour = 18
-  en_min = 0
-when "6" then
-  st_hour = 18
-  st_min = 10
-  en_hour = 19
-  en_min = 40
-end
-if ARGV.length > 6 then
-  st_min += ARGV[6].to_i
+st_hour = ARGV[5] 
+st_min = ARGV[6] 
+en_hour = ARGV[7] 
+en_min = ARGV[8] 
+
+if ARGV.length > 9 then
+  st_min += ARGV[9].to_i
   while st_min < 0 do
     st_hour -= 1
     st_min += 60
