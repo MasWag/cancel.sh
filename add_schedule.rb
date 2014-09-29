@@ -9,10 +9,11 @@ config = Pit.get("add_schedule.rb", :require => {
   "mail" => "input your login mail address",
   "pass" => "input your password",
   "feed" => "input your feed address",
+  "feed2" => "input your feed address",
 })
 
 srv = GoogleCalendar::Service.new(config["mail"], config["pass"])
-cal = GoogleCalendar::Calendar::new(srv, config["feed"])
+cal = GoogleCalendar::Calendar::new(srv, config["feed2"])
 st_hour = ARGV[5] 
 st_min = ARGV[6] 
 en_hour = ARGV[7] 
